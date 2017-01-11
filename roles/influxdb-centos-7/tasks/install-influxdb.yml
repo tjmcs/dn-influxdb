@@ -1,0 +1,6 @@
+---
+- name: "Install influxdb"
+  yum:
+    name: influxdb
+    state: present
+  environment: "{{environment_vars}}"

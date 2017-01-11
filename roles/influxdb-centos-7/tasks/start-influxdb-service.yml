@@ -1,0 +1,3 @@
+---
+- name: Start influxdb service
+  command: systemctl start influxdb.service

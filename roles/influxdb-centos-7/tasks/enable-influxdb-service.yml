@@ -1,0 +1,4 @@
+---
+- name: Enable influxdb service on boot
+  command: systemctl enable influxdb.service
+  

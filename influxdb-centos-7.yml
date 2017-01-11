@@ -1,0 +1,14 @@
+---
+- name: Install influxdb server
+  hosts: all
+  remote_user: root
+  become: true
+  roles:
+    - ensure-interfaces-up
+    - setup-web-proxy
+    - role: add-package-repo
+      package_name: influxdb
+      repo_name: "InfluxDB Repository"
+      repo_url: "https://repos.influxdata.com/rhel/$releasever/$basearch/stable"
+      repo_key_url: "https://repos.influxdata.com/influxdb.key"
+    - influxdb-centos-7
