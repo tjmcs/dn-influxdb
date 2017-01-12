@@ -11,7 +11,7 @@ That command will pull down the repository and it's submodules (currently the on
 # Use
 To run the included playbook, change directories to the `dn-influxdb` subdirectory and run a set of commands that look something like the following (the commands shown here will install the most recent version of the InfluxDB distribution from the main InfluxData package repository, for example, onto a machine with at the IP address "192.168.34.10"):
 ```bash
-$ export INFLUXDB_ADDR="192.168.34.8"
+$ export INFLUXDB_ADDR="192.168.34.10"
 $ echo "[all]\n${INFLUXDB_ADDR}" > hosts
 $ ansible-playbook site.yml --inventory-file hosts
 ```
