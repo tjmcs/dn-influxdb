@@ -35,12 +35,12 @@ rescue Exception => e
   exit 1
 end
 
-if !options[:influxdb_addr] && (ARGV[0] == "up" || ARGV[0] == "provision")
-  print "ERROR; server IP address must be supplied for 'up' and 'provision' commands\n"
+if !options[:influxdb_addr]
+  print "ERROR; influxdb server IP address must be supplied for vagrant commands\n"
   print optparse
   exit 1
-elsif options[:influxdb_addr] && !(options[:influxdb_addr] =~ Resolv::IPv4::Regex)
-  print "ERROR; input server IP address '#{options[:influxdb_addr]}' is not a valid IP address"
+elsif !(options[:influxdb_addr] =~ Resolv::IPv4::Regex)
+  print "ERROR; influxdb server IP address '#{options[:influxdb_addr]}' is not a valid IP address"
   exit 2
 end
 
@@ -118,10 +118,14 @@ Vagrant.configure("2") do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
+  config.vm.define "#{options[:influxdb_addr]}"
+  influxdb_addr_array = "#{options[:influxdb_addr]}".split(/,\w*/)
+
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "site.yml"
     ansible.extra_vars = {
       proxy_env: { http_proxy: proxy, no_proxy: no_proxy },
+      host_inventory: influxdb_addr_array
     }
   end
 
