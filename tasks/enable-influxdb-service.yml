@@ -1,3 +1,4 @@
+# (c) 2016 DataNexus Inc.  All Rights Reserved
 ---
 - name: Enable influxdb service on boot
   command: systemctl enable influxdb.service

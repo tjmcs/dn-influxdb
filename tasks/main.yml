@@ -1,3 +1,4 @@
+# (c) 2016 DataNexus Inc.  All Rights Reserved
 ---
 - include: install-influxdb.yml static=no tags=install,influxdb
 - include: enable-influxdb-service.yml static=no tags=service-mgmt,influxdb
