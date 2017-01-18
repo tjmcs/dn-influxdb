@@ -1,7 +1,6 @@
 ---
 - name: Install influxdb server
-  hosts: all
-  remote_user: root
+  hosts: "{{host_inventory}}"
   become: true
   roles:
     - ensure-interfaces-up
@@ -11,4 +10,4 @@
       repo_name: "InfluxDB Repository"
       repo_url: "https://repos.influxdata.com/rhel/$releasever/$basearch/stable"
       repo_key_url: "https://repos.influxdata.com/influxdb.key"
-    - influxdb-centos-7
+    - dn-influxdb
