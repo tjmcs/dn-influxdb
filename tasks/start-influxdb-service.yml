@@ -1,4 +1,5 @@
 # (c) 2016 DataNexus Inc.  All Rights Reserved
 ---
 - name: Start influxdb service
+  become: true
   command: systemctl start influxdb.service

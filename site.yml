@@ -2,10 +2,12 @@
 ---
 - name: Install influxdb server
   hosts: "{{host_inventory}}"
-  become: true
+  vars:
+    - combined_package_list: "{{ (default_packages|default([])) | union((install_packages_by_tag|default({})).influxdb|default([])) }}"
   roles:
     - ensure-interfaces-up
     - setup-web-proxy
+    - { role: install-packages, package_list: "{{combined_package_list}}" }
     - role: add-package-repo
       package_name: influxdb
       repo_name: "InfluxDB Repository"
