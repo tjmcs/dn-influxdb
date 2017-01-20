@@ -1,6 +1,7 @@
 # (c) 2016 DataNexus Inc.  All Rights Reserved
 ---
 - name: "Install influxdb"
+  become: true
   yum:
     name: influxdb
     state: present
