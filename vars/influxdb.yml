@@ -1,0 +1,6 @@
+# (c) 2016 DataNexus Inc.  All Rights Reserved
+#
+# Defaults that are necessary for all deployments of
+# influxdb
+---
+application: influxdb
