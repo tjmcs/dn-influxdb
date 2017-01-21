@@ -2,6 +2,8 @@
 ---
 - name: Install influxdb server
   hosts: "{{host_inventory}}"
+  vars_files:
+    - vars/influxdb.yml
   vars:
     - combined_package_list: "{{ (default_packages|default([])) | union((install_packages_by_tag|default({})).influxdb|default([])) }}"
   roles:
