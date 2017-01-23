@@ -22,6 +22,7 @@ class OptionParser
 end
 
 options = {}
+no_ip_commands = ['version', 'global-status', '--help', '-h']
 
 optparse = OptionParser.new do |opts|
   opts.banner    = "Usage: #{opts.program_name} [options]"
@@ -30,7 +31,7 @@ optparse = OptionParser.new do |opts|
   options[:influxdb_addr] = nil
   opts.on( '-i', '--influxdb-addr IP_ADDR', 'IP_ADDR of the infludb server' ) do |influxdb_addr|
     # while parsing, trim an '=' prefix character off the front of the string if it exists
-    # (would occur if the value was passed using an option flag like '-k=192.168.1.1')
+    # (would occur if the value was passed using an option flag like '-i=192.168.1.1')
     options[:influxdb_addr] = influxdb_addr.gsub(/^=/,'')
   end
 
@@ -45,18 +46,22 @@ end
 begin
   optparse.order_recognized!(ARGV)
 rescue SystemExit
-  ;
+  exit
 rescue Exception => e
   print "ERROR: could not parse command (#{e.message})\n"
   print optparse
   exit 1
 end
 
-if !options[:influxdb_addr]
+# check remaining arguments to see if the command requires
+# an IP address (or not)
+ip_required = (ARGV & no_ip_commands).empty?
+
+if ip_required && !options[:influxdb_addr]
   print "ERROR; influxdb server IP address must be supplied for vagrant commands\n"
   print optparse
   exit 1
-elsif !(options[:influxdb_addr] =~ Resolv::IPv4::Regex)
+elsif ip_required && !(options[:influxdb_addr] =~ Resolv::IPv4::Regex)
   print "ERROR; influxdb server IP address '#{options[:influxdb_addr]}' is not a valid IP address"
   exit 2
 end
